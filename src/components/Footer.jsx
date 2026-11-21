@@ -359,7 +359,7 @@ console.log("Encoded:", encodeURIComponent(shareMessage));
         <div className="gold-divider">❧ ✦ ❧</div>
         <p className="bottom-kicker">WITH ALL OUR LOVE</p>
         {/* <h2 className="bottom-couple">Sanket <span>&</span> Pranjali</h2> */}
-        <h2 className="bottom-couple">Bhaskar Sapat &Family</h2>
+        <h2 className="bottom-couple">Bhaskar Sapat & Family</h2>
         <p className="bottom-date">17 — 18 December 2026</p>
         <p className="footer-message">
           Your presence will make our celebration even more special.
