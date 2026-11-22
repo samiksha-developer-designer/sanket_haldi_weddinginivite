@@ -4,33 +4,10 @@ import Hero from "./components/Hero";
 import Countdown from "./components/Countdown";
 import EventCard from "./components/EventCard";
 import Footer from "./components/Footer";
-
-// import engagementImage from "./assets/images/engagement_card.png";
-// import sangeetImage from "./assets/images/sangeet_card.png";
 import haldiImage from "./assets/images/haldi_card.png";
 import weddingImage from "./assets/images/wedding_card.png";
 
 const events = [
-  // {
-  //   id: "engagement",
-  //   number: "01",
-  //   name: "Engagement",
-  //   date: "16th Dec 2026",
-  //   time: "3:00 PM",
-  //   venue: "Chandralok Creation, Datala Road, Chandrapur",
-  //   tagline: "A promise of forever",
-  //   image: engagementImage,
-  // },
-  // {
-  //   id: "sangeet",
-  //   number: "02",
-  //   name: "Sangeet",
-  //   date: "16th Dec 2026",
-  //   time: "7:00 PM",
-  //   venue: "Chandralok Creation, Datala Road, Chandrapur",
-  //   tagline: "Dance, music and memories",
-  //   image: sangeetImage,
-  // },
   {
     id: "haldi",
     number: "03",
