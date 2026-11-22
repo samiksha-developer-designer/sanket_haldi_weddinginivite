@@ -7,61 +7,107 @@ export default function MusicPlayer() {
 
   const [isPlaying, setIsPlaying] = useState(false);
 
-  useEffect(() => {
-    const audio = audioRef.current;
+  // useEffect(() => {
+  //   const audio = audioRef.current;
 
-    if (!audio) return;
+  //   if (!audio) return;
 
-    audio.volume = 0.25;
+  //   audio.volume = 0.25;
 
-    const removeInteractionListeners = () => {
-      window.removeEventListener("touchstart", handleFirstInteraction);
-      window.removeEventListener("pointerdown", handleFirstInteraction);
-      window.removeEventListener("click", handleFirstInteraction);
-      window.removeEventListener("keydown", handleFirstInteraction);
-    };
+  //   const removeInteractionListeners = () => {
+  //     window.removeEventListener("touchstart", handleFirstInteraction);
+  //     window.removeEventListener("pointerdown", handleFirstInteraction);
+  //     window.removeEventListener("click", handleFirstInteraction);
+  //     window.removeEventListener("keydown", handleFirstInteraction);
+  //   };
 
-    const handleFirstInteraction = async () => {
-      if (!audio.paused) {
-        removeInteractionListeners();
-        return;
-      }
+  //   const handleFirstInteraction = async () => {
+  //     if (!audio.paused) {
+  //       removeInteractionListeners();
+  //       return;
+  //     }
 
-      try {
-        await audio.play();
-        setIsPlaying(true);
-        removeInteractionListeners();
-      } catch (error) {
-        console.log("Playback waiting for another interaction:", error);
-      }
-    };
+  //     try {
+  //       await audio.play();
+  //       setIsPlaying(true);
+  //       removeInteractionListeners();
+  //     } catch (error) {
+  //       console.log("Playback waiting for another interaction:", error);
+  //     }
+  //   };
 
-    // Attempt autoplay
-    audio.play().catch(() => {
-      console.log("Autoplay blocked. Waiting for interaction.");
-    });
+  //   // Attempt autoplay
+  //   audio.play().catch(() => {
+  //     console.log("Autoplay blocked. Waiting for interaction.");
+  //   });
 
-    // Mobile touchscreen support
-    window.addEventListener(
-      "touchstart",
-      handleFirstInteraction,
-      { passive: true }
-    );
+  //   // Mobile touchscreen support
+  //   window.addEventListener(
+  //     "touchstart",
+  //     handleFirstInteraction,
+  //     { passive: true }
+  //   );
 
-    // Pointer and desktop support
-    window.addEventListener(
-      "pointerdown",
-      handleFirstInteraction
-    );
+  //   // Pointer and desktop support
+  //   window.addEventListener(
+  //     "pointerdown",
+  //     handleFirstInteraction
+  //   );
 
-    window.addEventListener("click", handleFirstInteraction);
-    window.addEventListener("keydown", handleFirstInteraction);
+  //   window.addEventListener("click", handleFirstInteraction);
+  //   window.addEventListener("keydown", handleFirstInteraction);
 
-    return () => {
-      removeInteractionListeners();
-      audio.pause();
-    };
-  }, []);
+  //   return () => {
+  //     removeInteractionListeners();
+  //     audio.pause();
+  //   };
+  // }, []);
+
+
+
+useEffect(() => {
+  const audio = audioRef.current;
+  if (!audio) return;
+
+  audio.volume = 0.25;
+
+  const startMusic = async () => {
+    if (!audio.paused) return;
+
+    try {
+      await audio.play();
+      setIsPlaying(true);
+      removeListeners();
+    } catch (error) {
+      console.log("Browser blocked music playback:", error.name, error.message);
+    }
+  };
+
+  const removeListeners = () => {
+    window.removeEventListener("touchstart", startMusic);
+    window.removeEventListener("pointerdown", startMusic);
+    window.removeEventListener("scroll", startMusic);
+  };
+
+  // Try autoplay first
+  audio.play().catch(() => {
+    console.log("Waiting for user's first interaction.");
+  });
+
+  // Try starting music on the first swipe/touch
+  window.addEventListener("touchstart", startMusic, { passive: true });
+
+  // Additional support for pointer-based devices
+  window.addEventListener("pointerdown", startMusic);
+
+  // Try when scrolling starts
+  window.addEventListener("scroll", startMusic, { passive: true });
+
+  return () => {
+    audio.pause();
+    removeListeners();
+  };
+}, []);
 
   const playMusic = async () => {
     const audio = audioRef.current;
